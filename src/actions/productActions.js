@@ -51,7 +51,7 @@ export function updateProductSuccess(product){
 	return { type: actionTypes.UPDATE_PRODUCT_SUCCESS, payload: product }
 }
 
-export function updatProductError(error){
+export function updateProductError(error){
 	return { type: actionTypes.UPDATE_PRODUCT_ERROR, error: error }
 }
 
@@ -60,7 +60,7 @@ export function updateProductDetails(asin){
 		return amazonApi.updateProductDetails(asin).then(product => {
 			dispatch(updateProductSuccess(product));
 		}).catch(error => {
-			dispatch(updatProductError(error));
+			dispatch(updateProductError(error));
 		});
 	}
 }

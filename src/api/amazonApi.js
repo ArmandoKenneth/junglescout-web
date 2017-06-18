@@ -1,10 +1,17 @@
 import * as constants from "../common/constants";
 
+function handleErrors(response) {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response.json();
+}
+
 class AmazonApi {
 	
 	static fetchProducts() {
 		return fetch(constants.BASE_URL+'products').then(response => {
-			return response.json();
+			return handleErrors(response);
 		}).catch(error => {
 			throw error;
 		});	
@@ -12,7 +19,7 @@ class AmazonApi {
 
 	static fetchProduct(asin){
 		return fetch(constants.BASE_URL+'products/'+asin).then(response => {
-			return response.json();
+			return handleErrors(response)
 		}).catch(error => {
 			throw error;
 		});
@@ -27,9 +34,9 @@ class AmazonApi {
 		});
 
 		return fetch(request).then(response => {
-			return response.json();
+			return handleErrors(response);
 		}).catch(error => {
-			return error;
+			throw error;
 		});
 	}
 

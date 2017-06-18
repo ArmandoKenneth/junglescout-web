@@ -12,7 +12,8 @@ class Main extends React.Component {
 			products: props.products,
 			filteredProducts: props.filteredProducts,
 			selectedProduct: props.selectedProduct,
-			asin: props.selectedProduct ? props.selectedProduct.asin : ""
+			asin: props.selectedProduct ? props.selectedProduct.asin : "",
+			error: props.error
 		}
 	}
 
@@ -45,6 +46,8 @@ class Main extends React.Component {
 					onSubmit={this.onSearchSubmit} asin={this.props.asin} />
 				<hr/>
 				{this.props.selectedProduct.title} - {this.props.selectedProduct.rating}
+				<hr/>
+				{this.props.error}
 			</div>
 		)
 	}
@@ -74,7 +77,8 @@ function mapStateToProps(state, ownProps) {
 	return {
 		products: state.productReducer.products,
 		filteredProducts: state.productReducer.filteredProducts,
-		selectedProduct: state.productReducer.selectedProduct
+		selectedProduct: state.productReducer.selectedProduct,
+		error: state.productReducer.error
 		// users: state.userReducer.users,
 		// selectedUser: state.userReducer.selectedUser,
 		// monthlyData: state.workReducer.monthlyData.weeks.sortWeek(),
