@@ -2,7 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux'; 
 import {bindActionCreators} from 'redux';
 import PropTypes from 'prop-types';
-import Search from '../components/Search'
+import Search from '../components/Search';
+import Header from '../components/Header';
+import ProductsList from '../components/ProductsList';
+
 import * as productActions from '../actions/productActions';
 
 class Main extends React.Component { 
@@ -29,40 +32,50 @@ class Main extends React.Component {
 	}
 
 	render(){
-		var products = this.state.products.map((product) => {
-			return (
-				<div key={product.asin}>
-					{product.asin}
-				</div>	
-			)
-		});
+		
 
+		let searchContainerStyle = {
+			backgroundColor: 'green'
+		};
+
+		let productsListStyle = {
+			backgroundColor: 'gray'
+		}
 
 		return(
 			<div>
-				{products}
-				<hr/>
-				<Search name='searchProduct' placeholder='Type an ASIN identifier' onChange={this.onSearchChange} 
+				<Header />
+				<div className='row' style={searchContainerStyle}>
+					<Search name='searchProduct' placeholder='Type an ASIN identifier' onChange={this.onSearchChange} 
 					onSubmit={this.onSearchSubmit} asin={this.props.asin} />
+					{this.props.error}	
+				</div>
+				<div className='row' style={productsListStyle}>
+					<ProductsList products={this.props.filteredProducts}/>
+				</div>
+				
 				<hr/>
 				{this.props.selectedProduct.title} - {this.props.selectedProduct.rating}
-				<hr/>
-				{this.props.error}
 			</div>
 		)
 	}
 
-	onSearchSubmit(event){
-		const product = this.props.products.filter(product => product.asin == this.state.asin)[0];
-		// debugger
-		if (product){
-			this.props.productActions.fetchProduct(product.asin);
-			// console.log("clicou. E o valor eh: "+product.title);
+	onSearchSubmit(event){	
+		if (!this.state.asin){
+			this.props.productActions.fetchProducts();
 		}else{
-			console.log("Indo na Amazon....")
-			this.props.productActions.updateProductDetails(this.state.asin);
-			// console.log("Tem que ir na amazon");
+			const product = this.props.products.filter(product => product.asin == this.state.asin)[0];
+			// debugger
+			if (product){
+				this.props.productActions.fetchProduct(product.asin);
+				// console.log("clicou. E o valor eh: "+product.title);
+			}else{
+				console.log("Indo na Amazon....")
+				this.props.productActions.updateProductDetails(this.state.asin);
+				// console.log("Tem que ir na amazon");
+			}
 		}
+
 	}
 
 	onSearchChange(event){
