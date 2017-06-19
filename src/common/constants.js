@@ -1,1 +1,1 @@
-export const BASE_URL = "http://localhost:3000/api/v1/";
+export const BASE_URL = "https://junglescout-armando.herokuapp.com/api/v1/";
