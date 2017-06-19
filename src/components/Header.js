@@ -2,11 +2,16 @@ import React from 'react';
 
 const Header = () => {
 	let headerStyle = {
-		backgroundColor: 'red'
+		padding: '1em'
+		// backgroundColor: 'red'
+	}
+	let logoStyle = {
+		width: '270px',
+		height: '36px'
 	}
 	return (
 		<div className="row" style={headerStyle}>
-			<h2>Ttle</h2>
+			<img src={process.env.PUBLIC_URL + '/img/logo.png'} style={logoStyle}/> 
 		</div>
 		
 	);

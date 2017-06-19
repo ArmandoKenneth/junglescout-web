@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {Route } from 'react-router-dom';
 import Main from './components/Main';
+import ProductDetails from './components/ProductDetails';
+import Header from './components/Header';
+
 
 class App extends Component {
   render() {
@@ -10,7 +13,9 @@ class App extends Component {
 
     return (
       <div className="container" style={appStyle}>
-        <Route path='/' component={Main}/>    
+        <Header />
+        <Route path='/' component={Main} exact/>  
+        <Route path='/details' component={ProductDetails} exact/> 
       </div>
     );
   }

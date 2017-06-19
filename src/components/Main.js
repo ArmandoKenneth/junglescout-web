@@ -6,6 +6,7 @@ import Search from '../components/Search';
 import Header from '../components/Header';
 import ProductsList from '../components/ProductsList';
 
+
 import * as productActions from '../actions/productActions';
 
 class Main extends React.Component { 
@@ -33,25 +34,29 @@ class Main extends React.Component {
 
 	render(){
 		
-
 		let searchContainerStyle = {
-			backgroundColor: 'green'
+			// backgroundColor: 'green'
+			padding: '1em'
 		};
 
 		let productsListStyle = {
-			backgroundColor: 'gray'
+			border: '1px solid #e2e2e2',
+			borderRadius: '5px',
+			padding: '1em',
+			margin: '0em'
+			// backgroundColor: 'gray'
+
 		}
 
 		return(
 			<div>
-				<Header />
 				<div className='row' style={searchContainerStyle}>
 					<Search name='searchProduct' placeholder='Type an ASIN identifier' onChange={this.onSearchChange} 
 					onSubmit={this.onSearchSubmit} asin={this.props.asin} />
 					{this.props.error}	
 				</div>
 				<div className='row' style={productsListStyle}>
-					<ProductsList products={this.props.filteredProducts}/>
+					<ProductsList products={this.props.filteredProducts} selectedProduct={this.props.selectedProduct}/>
 				</div>
 				
 				<hr/>
@@ -92,21 +97,12 @@ function mapStateToProps(state, ownProps) {
 		filteredProducts: state.productReducer.filteredProducts,
 		selectedProduct: state.productReducer.selectedProduct,
 		error: state.productReducer.error
-		// users: state.userReducer.users,
-		// selectedUser: state.userReducer.selectedUser,
-		// monthlyData: state.workReducer.monthlyData.weeks.sortWeek(),
-		// selectedMonth: state.workReducer.selectedMonth,
-		// selectedYear: state.workReducer.selectedYear,
-		// selectedWeek: state.workReducer.selectedWeek,
-		// userError: state.userReducer.userError,
-		// workError: state.workReducer.workError
 	}
 } 
 
 function mapDispatchToProps(dispatch){
 	return {
-		productActions: bindActionCreators(productActions, dispatch),
-		// workActions: bindActionCreators(workActions, dispatch)
+		productActions: bindActionCreators(productActions, dispatch)
 	}
 }
 
