@@ -26,6 +26,8 @@ class Main extends React.Component {
 		this.state = this.buildInternalStateFromProps(props);
 		this.onSearchSubmit = this.onSearchSubmit.bind(this);
 		this.onSearchChange = this.onSearchChange.bind(this);
+		this.onSelectProduct = this.onSelectProduct.bind(this);
+		this.onCloseReview = this.onCloseReview.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -48,19 +50,28 @@ class Main extends React.Component {
 
 		}
 
+		let errorMessageStyle = {
+			color: '#d81e1e',
+			paddingTop: '.4em'
+		}
+
+		let message;
+		if (this.state.products.length == 0){
+			message = "No product was stored. Try using the field above!";
+		}
+
 		return(
 			<div>
 				<div className='row' style={searchContainerStyle}>
 					<Search name='searchProduct' placeholder='Type an ASIN identifier' onChange={this.onSearchChange} 
 					onSubmit={this.onSearchSubmit} asin={this.props.asin} />
-					{this.props.error}	
+					<p style={errorMessageStyle}>{this.props.error}</p>	
 				</div>
 				<div className='row' style={productsListStyle}>
-					<ProductsList products={this.props.filteredProducts} selectedProduct={this.props.selectedProduct}/>
+					<ProductsList products={this.props.filteredProducts} selectedProduct={this.props.selectedProduct}
+					onSelectProduct={this.onSelectProduct} onCloseReview={this.onCloseReview}/>
+					{message}
 				</div>
-				
-				<hr/>
-				{this.props.selectedProduct.title} - {this.props.selectedProduct.rating}
 			</div>
 		)
 	}
@@ -81,6 +92,16 @@ class Main extends React.Component {
 			}
 		}
 
+	}
+
+	onSelectProduct(event){
+		// debugger
+		// console.log(event.target.className)
+		this.props.productActions.fetchProduct(event.target.className);
+	}
+
+	onCloseReview(){
+		this.props.productActions.fetchProducts();
 	}
 
 	onSearchChange(event){

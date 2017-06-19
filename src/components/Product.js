@@ -2,7 +2,7 @@ import React from 'react';
 import Reviews from '../components/Reviews';
 
 
-const Product = ({product, selectedProduct}) => {
+const Product = ({product, selectedProduct, onSelectProduct, onCloseReview}) => {
 	
 	let productImageStyle = {
 		width: '100px',
@@ -19,10 +19,14 @@ const Product = ({product, selectedProduct}) => {
 		marginTop: '-8px'
 	}
 
+	let linkStyle = {
+		color: '#3a4dc4'
+	}
+
 	// let reviews = retproduct.asin == selectedProduct.asin ? return <Reviews reviews={product.reviews} /> : "";
 	let reviews = null;
 	if (selectedProduct && product.asin == selectedProduct.asin){
-		reviews = (<Reviews reviews={product.reviews} />);
+		reviews = (<Reviews reviews={product.reviews} onCloseReview={onCloseReview} />);
 	}
 	return (
 		<div className="row">
@@ -32,7 +36,7 @@ const Product = ({product, selectedProduct}) => {
 			<div className="col-md-10" style={productDetailsStyle}>
 				<p><b>{product.title}</b></p>
 				<p className='text-muted' style={subtitleStyle}>{product.rating} out of 5.0</p>
-				<p style={subtitleStyle}>{product.reviews.length} reviews</p>
+				<p style={subtitleStyle, linkStyle} onClick={onSelectProduct} className={product.asin}>{product.reviews.length} reviews</p>
 				<hr/>
 				{reviews}
 			</div>

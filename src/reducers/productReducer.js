@@ -24,8 +24,8 @@ export default function productReducer(state = defaultState, action){
 		// case actionTypes.UPDATE_PRODUCT_ERROR:
 			// return Object.assign({}, state, { error: action.error})
 		case actionTypes.FETCH_PRODUCTS_ERROR, actionTypes.FETCH_PRODUCT_ERROR, actionTypes.UPDATE_PRODUCT_ERROR:
-			debugger
-			return Object.assign({}, state, { error: action.error.message});
+			// action.error.message
+			return Object.assign({}, state, { error: "Unable to fetch the given product"});
 		default:
 			return state;
 	}
